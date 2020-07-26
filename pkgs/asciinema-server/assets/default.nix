@@ -18,6 +18,6 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out
-    cp js/* $out/
+    cp -a priv/static $out/
   '';
 }

@@ -30,14 +30,7 @@ in stdenv.mkDerivation {
 
   buildInputs = [ leiningen ];
 
-  src = "${
-      fetchgit {
-        url = "https://github.com/asciinema/asciinema-server";
-        rev = "93e913adb1609d8c439d8159c2bd6bd1c81bafbc";
-        sha256 = "1dgxmxqjr44cvbc9fqkpgf7wg7ybxqms877wx66qxgjibpq5658q";
-        fetchSubmodules = true;
-      }
-    }/vt";
+  src = "${asciinemaServerSrc}/vt";
 
   patches = [ ./diff.patch ];
 

@@ -51,9 +51,9 @@ in mix2nix.mkMixPackage {
   name = "asciinema-server";
 
   preBuild = ''
-    mkdir -p priv/{vt,static/js}
+    mkdir -p priv/{vt,static}
     cp ${vt}/*.js priv/vt/
-    cp ${assets}/*.js priv/static/js/
+    cp -a ${assets}/static/* priv/static/
     chmod -R +rw priv/*
     export MIX_ENV=prod
     mkdir deps

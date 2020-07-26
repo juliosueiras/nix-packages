@@ -1,0 +1,11 @@
+diff --git a/assets/package.json b/assets/package.json
+index 2b78ac39..6561d1d8 100644
+--- a/assets/package.json
++++ b/assets/package.json
+@@ -1,4 +1,6 @@
+ {
++  "name": "asciinema-assets",
++  "version":"0.0.0",
+   "repository": {},
+   "license": "MIT",
+   "scripts": {

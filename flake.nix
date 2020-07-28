@@ -23,14 +23,14 @@
         config = { allowUnfree = true; };
         overlays = [
           (self: super: {
-            mix2nix = (super.callPackage "${mixnix}/nix/mix2nix.nix" {});
+            mix2nix = (super.callPackage "${mixnix}/nix/mix2nix.nix" { });
             clj2nix = (super.callPackage clj2nix { });
           })
         ];
       });
     in {
       packages.x86_64-linux = {
-        asciinema-server = pkgs.callPackage ./pkgs/asciinema-server {};
+        asciinema-server = pkgs.callPackage ./pkgs/asciinema-server { };
       };
 
       overlays = pkgs.overlays;
@@ -48,12 +48,115 @@
       in pkgs.mkShell {
         NIX_PATH = "nixpkgs=${nixpkgs}:nixpkgs-overlays=${nixpkgs-overlay}";
 
-        buildInputs = [
-          pkgs.mix2nix.mix2nix 
-          pkgs.clj2nix 
-          pkgs.elixir_1_7
-          pkgs.leiningen
-        ];
+        buildInputs =
+          [ pkgs.mix2nix.mix2nix pkgs.clj2nix pkgs.elixir_1_7 pkgs.leiningen ];
       };
+
+      nixosModules.asciinema-server = { config, lib, pkgs, ... }:
+        with lib;
+        let
+          cfg = config.services.asciinema-server;
+
+          customConfig = pkgs.writeText "custom.exs" ''
+            use Mix.Config
+            env = &System.get_env/1
+            config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
+          '';
+        in {
+          options.services.asciinema-server = {
+            enable = mkOption {
+              type = types.bool;
+              default = false;
+              description = ''
+                Enable Asciinema Server
+              '';
+            };
+
+            dbpassword = mkOption {
+              type = types.str;
+              default = "test";
+              description = ''
+                Password for DB (self-provided database, instead of external database)
+              '';
+            };
+          };
+
+          config = mkIf cfg.enable {
+
+            networking.firewall = { allowedTCPPorts = [ 80 443 ]; };
+
+            systemd.tmpfiles.rules = [
+              "d /var/lib/asciinema-server 0755 asciinema asciinema -"
+              "d /etc/asciinema-server/uploads 0755 asciinema asciinema -"
+            ];
+
+            systemd.services.asciinema-server = {
+              after = [ "network.target" ];
+              wantedBy = [ "multi-user.target" ];
+              path = [ pkgs.bash pkgs.nodejs pkgs.gawk ];
+
+              environment = {
+                DATABASE_URL =
+                  "postgresql://asciinemadb:${cfg.dbpassword}@localhost/asciinema";
+                UPLOADS_PATH = "/etc/asciinema-server/uploads/";
+                URL_HOST = "localhost";
+                URL_PORT = "3000";
+                URL_SCHEME = "http";
+                PORT = "3000";
+              };
+
+              preStart = ''
+                rm -rf /var/lib/asciinema-server/*
+                cp -a ${self.packages.x86_64-linux.asciinema-server}/* /var/lib/asciinema-server/
+                cp -a ${self.packages.x86_64-linux.asciinema-server}/.iex.exs /var/lib/asciinema-server/
+                chmod -R +rw /var/lib/asciinema-server
+                chown -R asciinema:asciinema /var/lib/asciinema-server
+                cp ${customConfig} /var/lib/asciinema-server/etc/custom.exs
+                /var/lib/asciinema-server/bin/asciinema migrate_and_seed
+              '';
+              serviceConfig = {
+                Type = "simple";
+                User = "asciinema";
+                PrivateTmp = "true";
+                Group = "asciinema";
+                TimeoutSec = "infinity";
+                Restart = "on-failure";
+                ExecStart = ''
+                  /var/lib/asciinema-server/bin/asciinema foreground
+                '';
+              };
+            };
+
+            #services.nginx = {
+            #  enable = true;
+            #  virtualHosts = {
+            #    "${cfg.host}" = {
+            #      forceSSL = true;
+            #      sslCertificate = cfg.cert;
+            #      sslCertificateKey = cfg.key;
+            #      root = "http://localhost:3000";
+            #    };
+            #  };
+            #};
+
+            services.redis.enable = true;
+
+            users.groups.asciinema = {};
+            users.users.asciinema = {
+              group = "asciinema";
+              shell = "${pkgs.bash}/bin/bash";
+            };
+
+            services.postgresql = {
+              enable = true;
+              ensureDatabases = [ "asciinema" ];
+
+              initialScript = pkgs.writeText "init.sql" ''
+                CREATE ROLE asciinemadb WITH LOGIN NOCREATEDB NOCREATEROLE PASSWORD '${cfg.dbpassword}'
+                GRANT ALL PRIVILEGES ON DATABASE asciinema TO asciinemadb;
+              '';
+            };
+          };
+        };
     };
 }

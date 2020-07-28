@@ -8,13 +8,13 @@
 
   outputs = { self, nixpkgs }:
     let
-      mixnix = builtins.fetchGit {
+      mixnix = builtins.fetchgit {
         url = "https://gitlab.com/manveru/mixnix";
         rev = "779daa4eb3ecb6d8db05e4619febed5087491488";
         sha256 = "0p5j1f8x8syw5wd5ylwgdx9213xji55050s6yvrni9h9x8nzl3z2";
       };
 
-      clj2nix = builtins.fetchGit {
+      clj2nix = builtins.fetchgit {
         url = "https://github.com/hlolli/clj2nix";
         rev = "3ab3480a25e850b35d1f532a5e4e7b3202232383";
         sha256 = "1lry026mlpxp1j563qs13nhxf37i2zpl7lh0lgfdwc44afybqka6";

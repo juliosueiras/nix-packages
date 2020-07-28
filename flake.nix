@@ -4,20 +4,22 @@
   inputs.nixpkgs.url =
     "github:NixOS/nixpkgs/469f14ef0fade3ae4c07e4977638fdf3afc29e08";
 
-  inputs.mixnix = {
-    url = "git+https://gitlab.com/manveru/mixnix";
-    flake = false;
-  };
-
-  inputs.clj2nix = {
-    url = "github:hlolli/clj2nix";
-    flake = false;
-  };
-
   edition = 201909;
 
-  outputs = { self, nixpkgs, mixnix, clj2nix }:
+  outputs = { self, nixpkgs }:
     let
+      mixnix = builtins.fetchGit {
+        url = "https://gitlab.com/manveru/mixnix";
+        rev = "779daa4eb3ecb6d8db05e4619febed5087491488";
+        sha256 = "0p5j1f8x8syw5wd5ylwgdx9213xji55050s6yvrni9h9x8nzl3z2";
+      };
+
+      clj2nix = builtins.fetchGit {
+        url = "https://github.com/hlolli/clj2nix";
+        rev = "3ab3480a25e850b35d1f532a5e4e7b3202232383";
+        sha256 = "1lry026mlpxp1j563qs13nhxf37i2zpl7lh0lgfdwc44afybqka6";
+      };
+
       pkgs = (import nixpkgs {
         system = "x86_64-linux";
         config = { allowUnfree = true; };

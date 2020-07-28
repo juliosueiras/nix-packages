@@ -184,7 +184,7 @@
               ensureDatabases = [ "asciinema" ];
 
               initialScript = pkgs.writeText "init.sql" ''
-                CREATE ROLE asciinemadb WITH LOGIN NOCREATEDB NOCREATEROLE PASSWORD '${cfg.dbpassword}'
+                CREATE ROLE asciinemadb WITH LOGIN NOCREATEDB NOCREATEROLE PASSWORD '${cfg.dbpassword}';
                 GRANT ALL PRIVILEGES ON DATABASE asciinema TO asciinemadb;
               '';
             };

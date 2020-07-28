@@ -79,6 +79,30 @@
                 Password for DB (self-provided database, instead of external database)
               '';
             };
+
+            host = mkOption {
+              type = types.str;
+              default = "";
+              description = ''
+                  Hostname for the Asciinema site
+              '';
+            };
+
+            cert = mkOption {
+              type = types.path;
+              default = "";
+              description = ''
+                  SSL Certificate
+              '';
+            };
+
+            key = mkOption {
+              type = types.path;
+              default = "";
+              description = ''
+                  SSL Key
+              '';
+            };
           };
 
           config = mkIf cfg.enable {
@@ -99,9 +123,9 @@
                 DATABASE_URL =
                   "postgresql://asciinemadb:${cfg.dbpassword}@localhost/asciinema";
                 UPLOADS_PATH = "/etc/asciinema-server/uploads/";
-                URL_HOST = "localhost";
-                URL_PORT = "3000";
-                URL_SCHEME = "http";
+                URL_HOST = "${cfg.host}";
+                URL_PORT = "443";
+                URL_SCHEME = "https";
                 PORT = "3000";
               };
 
@@ -127,17 +151,17 @@
               };
             };
 
-            #services.nginx = {
-            #  enable = true;
-            #  virtualHosts = {
-            #    "${cfg.host}" = {
-            #      forceSSL = true;
-            #      sslCertificate = cfg.cert;
-            #      sslCertificateKey = cfg.key;
-            #      root = "http://localhost:3000";
-            #    };
-            #  };
-            #};
+            services.nginx = {
+              enable = true;
+              virtualHosts = {
+                "${cfg.host}" = {
+                  forceSSL = true;
+                  sslCertificate = cfg.cert;
+                  sslCertificateKey = cfg.key;
+                  root = "http://localhost:3000";
+                };
+              };
+            };
 
             services.redis.enable = true;
 

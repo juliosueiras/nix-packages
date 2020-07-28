@@ -162,8 +162,8 @@
               virtualHosts = {
                 "${cfg.host}" = {
                   forceSSL = true;
-                  sslCertificate = "${cfg.cert}";
-                  sslCertificateKey = "${cfg.key}";
+                  sslCertificate = cfg.cert;
+                  sslCertificateKey = cfg.key;
                   root = "http://localhost:3000";
                 };
               };

@@ -164,7 +164,7 @@
                   forceSSL = true;
                   sslCertificate = cfg.cert;
                   sslCertificateKey = cfg.key;
-                  location."/" = {
+                  locations."/" = {
                     proxyPass = "http://localhost:3000";
                   };
                 };

@@ -25,7 +25,7 @@
   generateSite = let
     generateSite = pkgs.writeScript "generate-site" ''
           ${self.apps.x86_64-linux.copyDocs.program}
-          ${pkgs.antora}/bin/antora generate antora-playbook.yml
+          ${pkgs.antora}/bin/antora generate antora-playbook.yml --clean
     '';
   in {
     type = "app";

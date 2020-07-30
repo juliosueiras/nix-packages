@@ -1,0 +1,6 @@
+name: Julio's Nix Packages & NixOS Modules
+title: Julio's Nix Packages & NixOS Modules
+version: 0.0.1
+start_page: ROOT:index.adoc
+#nav:
+#- modules/ROOT/nav.adoc

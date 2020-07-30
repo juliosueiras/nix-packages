@@ -52,8 +52,13 @@
       in pkgs.mkShell {
         NIX_PATH = "nixpkgs=${nixpkgs}:nixpkgs-overlays=${nixpkgs-overlay}";
 
-        buildInputs =
-          [ pkgs.mix2nix.mix2nix pkgs.clj2nix pkgs.elixir_1_7 pkgs.leiningen pkgs.antora ];
+        buildInputs = [
+          pkgs.mix2nix.mix2nix
+          pkgs.clj2nix
+          pkgs.elixir_1_7
+          pkgs.leiningen
+          pkgs.antora
+        ];
       };
 
       apps.x86_64-linux = import ./site.nix { inherit pkgs self; };
@@ -72,6 +77,9 @@
                 server: "localhost",
                 port: 25
           '';
+
+          generateSecret = pkgs.runCommand { preferLocalBuild = true; }
+            "${self.packages.x86_64-linux.asciinema-server}/bin/asciinema gen_secret > $out";
         in {
           options.services.asciinema-server = {
             enable = mkOption {
@@ -144,7 +152,10 @@
                 URL_PORT = "443";
                 URL_SCHEME = "https";
                 PORT = "3000";
-                SECRET_KEY_BASE = (if cfg.secretKeyBase != "generated" then cfg.secretKeyBase else "${(readFile (pkgs.runCommand { preferLocalBuild = true; } ''${self.packages.x86_64-linux.asciinema-server}/bin/asciinema gen_secret > $out''))}");
+                SECRET_KEY_BASE = (if cfg.secretKeyBase != "generated" then
+                  cfg.secretKeyBase
+                else
+                  generateSecret);
               };
 
               preStart = ''

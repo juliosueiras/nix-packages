@@ -1,0 +1,3 @@
+# My Nix Packages & NixOS Modules
+
+***DISCLAIMER: EXTREMELY EXPERIMENTAL, USE IT AT YOUR OWN RISK*** 

@@ -8,9 +8,7 @@
 
   outputs = { self, nixpkgs }:
     let
-      _pkgs = (import nixpkgs {
-        system = "x86_64-linux";
-      });
+      _pkgs = (import nixpkgs { system = "x86_64-linux"; });
 
       mixnix = _pkgs.fetchgit {
         url = "https://gitlab.com/manveru/mixnix";
@@ -90,7 +88,7 @@
               type = types.str;
               default = "";
               description = ''
-                  Hostname for the Asciinema site
+                Hostname for the Asciinema site
               '';
             };
 
@@ -98,7 +96,7 @@
               type = types.path;
               default = "";
               description = ''
-                  SSL Certificate
+                SSL Certificate
               '';
             };
 
@@ -106,11 +104,10 @@
               type = types.path;
               default = "";
               description = ''
-                  SSL Key
+                SSL Key
               '';
             };
           };
-
           config = mkIf cfg.enable {
 
             networking.firewall = { allowedTCPPorts = [ 80 443 ]; };
@@ -164,16 +161,14 @@
                   forceSSL = true;
                   sslCertificate = cfg.cert;
                   sslCertificateKey = cfg.key;
-                  locations."/" = {
-                    proxyPass = "http://localhost:3000";
-                  };
+                  locations."/" = { proxyPass = "http://localhost:3000"; };
                 };
               };
             };
 
             services.redis.enable = true;
 
-            users.groups.asciinema = {};
+            users.groups.asciinema = { };
             users.users.asciinema = {
               group = "asciinema";
               shell = "${pkgs.bash}/bin/bash";

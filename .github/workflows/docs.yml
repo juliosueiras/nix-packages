@@ -9,5 +9,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: cachix/install-nix-action@v10
     - run: "nix-build get-flake.nix"
+    - run: mkdir -p ~/.config/nix/nix.conf
     - run: echo "experimental-features = nix-command flakes ca-references" >> ~/.config/nix/nix.conf
     - run: "./result/bin/nix app .#generateSite"

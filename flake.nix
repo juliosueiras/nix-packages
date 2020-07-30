@@ -82,6 +82,13 @@
               '';
             };
 
+            secretKeyBase = mkOption {
+              type = types.str or types.null;
+              description = ''
+                Secret Key for Cookies
+              '';
+            };
+
             dbpassword = mkOption {
               type = types.str;
               default = "test";
@@ -136,6 +143,9 @@
                 URL_PORT = "443";
                 URL_SCHEME = "https";
                 PORT = "3000";
+                SECRET_KEY_BASE = (if cfg.secretKeyBase != null then cfg.secretKeyBase else (pkgs.runCommand { preferLocalBuild = true; } ''
+                  ${self.packages.x86_64-linux.asciinema-server}/bin/asciinema gen_secret > $out
+                  ''));
               };
 
               preStart = ''

@@ -144,7 +144,7 @@
                 URL_PORT = "443";
                 URL_SCHEME = "https";
                 PORT = "3000";
-                SECRET_KEY_BASE = (if cfg.secretKeyBase != "generated" then cfg.secretKeyBase else (readFile "${(pkgs.runCommand { preferLocalBuild = true; } ''${self.packages.x86_64-linux.asciinema-server}/bin/asciinema gen_secret > $out'')}"));
+                SECRET_KEY_BASE = (if cfg.secretKeyBase != "generated" then cfg.secretKeyBase else (readFile (pkgs.runCommand { preferLocalBuild = true; } ''${self.packages.x86_64-linux.asciinema-server}/bin/asciinema gen_secret > $out'')));
               };
 
               preStart = ''

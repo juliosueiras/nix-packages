@@ -8,6 +8,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: cachix/install-nix-action@v10
-      with:
-        nix_path: nixpkgs=channel:469f14ef0fade3ae4c07e4977638fdf3afc29e08
-    - run: nix run nixpkgs.nixFlakes -c nix
+    - run: "nix build -f <nixpkgs> nixFlakes"
+    - run: "./result/bin/nix app .#generateSite"

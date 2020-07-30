@@ -1,4 +1,5 @@
-name: main-docs
-version: 0.0.1
-#nav:
-#- modules/ROOT/nav.adoc
+name: nix-packages
+title: NixOS Modules
+version: dev
+nav:
+- modules/ROOT/nav.adoc

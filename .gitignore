@@ -95,3 +95,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/vim,nix,windows,linux,macos
 result
+build/
+docs/modules/ROOT/pages/*.adoc

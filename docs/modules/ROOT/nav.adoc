@@ -1,4 +1,2 @@
-.NixOS Modules
-* xref:ROOT:index.adoc[Intro]
-* xref:ROOT:asciinema-server.adoc[Asciinema Server]
-
+.NixOS Services
+* xref:ROOT:asciinema-server.adoc[services.asciinema-server]

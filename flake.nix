@@ -53,8 +53,10 @@
         NIX_PATH = "nixpkgs=${nixpkgs}:nixpkgs-overlays=${nixpkgs-overlay}";
 
         buildInputs =
-          [ pkgs.mix2nix.mix2nix pkgs.clj2nix pkgs.elixir_1_7 pkgs.leiningen ];
+          [ pkgs.mix2nix.mix2nix pkgs.clj2nix pkgs.elixir_1_7 pkgs.leiningen pkgs.antora ];
       };
+
+      apps.x86_64-linux = import ./site.nix { inherit pkgs self; };
 
       nixosModules.asciinema-server = { config, lib, pkgs, ... }:
         with lib;

@@ -1,0 +1,13 @@
+site:
+  title: "Julio's Nix Packages and NixOS Modules"
+  #url: https://github.com/juliosueiras/nix-packages
+  start_page: nix-packages::index.adoc
+content:
+  sources:
+  - url: ./
+    start_path: docs
+ui:
+  supplemental_files: ./sup-ui
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true

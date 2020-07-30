@@ -67,14 +67,18 @@
             use Mix.Config
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
+            config :asciinema, Asciinema.Mailer,
+                adapter: Bamboo.SMTPAdapter,
+                server: "localhost",
+                port: 25
           '';
         in {
           options.services.asciinema-server = {
-            enable = mkOption {
+            enable = mkoption {
               type = types.bool;
               default = false;
               description = ''
-                Enable Asciinema Server
+                enable asciinema server
               '';
             };
 

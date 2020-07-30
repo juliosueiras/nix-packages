@@ -74,11 +74,11 @@
           '';
         in {
           options.services.asciinema-server = {
-            enable = mkoption {
+            enable = mkOption {
               type = types.bool;
               default = false;
               description = ''
-                enable asciinema server
+                Enable Asciinema Server
               '';
             };
 

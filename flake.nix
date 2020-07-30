@@ -84,6 +84,7 @@
 
             secretKeyBase = mkOption {
               type = types.str or types.null;
+              default = null;
               description = ''
                 Secret Key for Cookies
               '';

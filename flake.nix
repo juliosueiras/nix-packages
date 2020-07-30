@@ -186,7 +186,7 @@
               '';
             };
 
-            services.opensmtpd.enable = true;
+            services.postfix.enable = true;
           };
         };
     };

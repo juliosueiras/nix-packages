@@ -185,6 +185,8 @@
                 GRANT ALL PRIVILEGES ON DATABASE asciinema TO asciinemadb;
               '';
             };
+
+            services.opensmtpd.enable = true;
           };
         };
     };

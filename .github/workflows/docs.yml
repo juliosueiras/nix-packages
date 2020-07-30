@@ -11,4 +11,4 @@ jobs:
     - run: "nix-build get-flake.nix"
     - run: mkdir -p ~/.config/nix
     - run: echo "experimental-features = nix-command flakes ca-references" >> ~/.config/nix/nix.conf
-    - run: "./result/bin/nix app .#generateSite"
+    - run: "./result/bin/nix app .#generateSite && ls build/site"

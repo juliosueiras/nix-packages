@@ -78,7 +78,7 @@
                 port: 25
           '';
 
-          generateSecret = pkgs.runCommandLocal "generate-secret" {} ''
+          generateSecret = pkgs.runCommand "generate-secret" { preferLocalBuild = true; } ''
             ${self.packages.x86_64-linux.asciinema-server}/bin/asciinema gen_secret > $out
             '';
         in {

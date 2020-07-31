@@ -75,7 +75,7 @@
             config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "localhost",
-                hostname : "${cfg.host}",
+                hostname: "${cfg.host}",
                 username: "asciinema@${cfg.host}",
                 port: 25
           '';

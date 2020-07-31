@@ -76,10 +76,10 @@
                 adapter: Bamboo.SMTPAdapter,
                 server: "localhost",
                 hostname: "${cfg.host}",
-                username: "asciinema@${cfg.host}",
+                username: "",
+                password: "",
                 port: 25,
-                tls: :if_available,
-                allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"],
+                tls: :never,
                 ssl: false,
                 retries: 1,
                 no_mx_lookups: false 

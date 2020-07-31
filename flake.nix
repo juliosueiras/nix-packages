@@ -77,11 +77,16 @@
                 server: "localhost",
                 hostname: "${cfg.host}",
                 username: "asciinema@${cfg.host}",
-                port: 25
-          '';
+                port: 25,
+                tls: :if_available,
+                allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"],
+                ssl: false,
+                retries: 1,
+                no_mx_lookups: false 
+  '';
 
-          generateSecret = readFile (pkgs.runCommand "generate-secret" { preferLocalBuild = true; } ''
-            cp -a ${self.packages.x86_64-linux.asciinema-server}/* .
+      generateSecret = readFile (pkgs.runCommand "generate-secret" { preferLocalBuild = true; } ''
+          cp -a ${self.packages.x86_64-linux.asciinema-server}/* .
             ./bin/asciinema gen_secret > $out
             '');
         in {

@@ -1,4 +1,4 @@
-name: nix-packages
+name: main
 title: NixOS Modules
 version: dev
 nav:

@@ -1,7 +1,7 @@
 site:
   title: "Julio's Nix Packages and NixOS Modules"
-  #url: https://github.com/juliosueiras/nix-packages
-  start_page: nix-packages::index.adoc
+  url: https://github.com/juliosueiras/nix-packages
+  start_page: main::index.adoc
 content:
   sources:
   - url: ./

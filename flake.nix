@@ -74,8 +74,7 @@
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
             config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.SMTPAdapter,
-                server: "localhost",
-                hostname: "${cfg.host}",
+                server: "${cfg.host}",
                 username: "",
                 password: "",
                 port: 25,

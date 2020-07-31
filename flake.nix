@@ -215,6 +215,8 @@
             };
 
             services.postfix.enable = true;
+            services.postfix.enableSubmission = true;
+
           };
         };
     };

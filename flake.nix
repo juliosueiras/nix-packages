@@ -72,6 +72,7 @@
             use Mix.Config
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
+          '' ++ optional enableMail ''
             config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "${cfg.host}",
@@ -82,7 +83,7 @@
                 ssl: false,
                 retries: 1,
                 no_mx_lookups: false 
-  '';
+          '';
 
       generateSecret = readFile (pkgs.runCommand "generate-secret" { preferLocalBuild = true; } ''
           cp -a ${self.packages.x86_64-linux.asciinema-server}/* .
@@ -103,6 +104,14 @@
               default = "generated";
               description = ''
                 Secret Key for Cookies
+              '';
+            };
+
+            enableMail = mkOption {
+              type = types.bool;
+              default = false;
+              description = ''
+                Enable Mail options & run Postfix
               '';
             };
 
@@ -218,9 +227,10 @@
               '';
             };
 
-            services.postfix.enable = true;
-            services.postfix.enableSubmission = true;
-
+            services.postfix = mkIf enableMail {
+              enable = true;
+              enableSubmission = true;
+            };
           };
         };
     };

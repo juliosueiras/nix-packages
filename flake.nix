@@ -85,10 +85,11 @@
                 no_mx_lookups: false 
           '';
 
-      generateSecret = readFile (pkgs.runCommand "generate-secret" { preferLocalBuild = true; } ''
-          cp -a ${self.packages.x86_64-linux.asciinema-server}/* .
-            ./bin/asciinema gen_secret > $out
-            '');
+          generateSecret = readFile
+            (pkgs.runCommand "generate-secret" { preferLocalBuild = true; } ''
+              cp -a ${self.packages.x86_64-linux.asciinema-server}/* .
+                ./bin/asciinema gen_secret > $out
+                '');
         in {
           options.services.asciinema-server = {
             enable = mkOption {

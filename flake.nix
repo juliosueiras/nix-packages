@@ -81,7 +81,7 @@
                 password: "${cfg.gmail.password}",
                 tls: :if_available, # can be `:always` or `:never`
                 allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
-                ssl: true,
+                ssl: false,
                 retries: 1
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,

@@ -296,6 +296,7 @@
                 @localhost.com asciinema
               '';
               enableSubmission = true;
+              destination = [ "localhost.com" "localhost" ];
             };
           };
         };

@@ -76,12 +76,12 @@
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "smtp.gmail.com",
-                port: 587,
+                port: 465,
                 username: "${cfg.gmail.username}",
                 password: "${cfg.gmail.password}",
                 tls: :if_available, # can be `:always` or `:never`
                 allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
-                ssl: false,
+                ssl: true,
                 retries: 1
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,

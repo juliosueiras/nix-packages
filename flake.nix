@@ -72,7 +72,7 @@
             use Mix.Config
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
-          '' ++ (if cfg.enableMail then ''
+          '' ++ [(if cfg.enableMail then ''
             config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "${cfg.host}",
@@ -86,7 +86,7 @@
           '' else ''
             config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.LocalAdapter
-          '');
+          '')];
 
           generateSecret = readFile
             (pkgs.runCommand "generate-secret" { preferLocalBuild = true; } ''

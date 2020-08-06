@@ -86,7 +86,7 @@
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.LocalAdapter
-              defmodule Asciinema.Router do
+              defmodule AsciinemaWeb.Router do
                 use Phoenix.Router
                 forward "/sent_emails", Bamboo.SentEmailViewerPlug
               end

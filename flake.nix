@@ -72,7 +72,7 @@
             use Mix.Config
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
-          '' ++ (if enableMail then ''
+          '' ++ (if cfg.enableMail then ''
             config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "${cfg.host}",
@@ -231,7 +231,7 @@
               '';
             };
 
-            services.postfix = mkIf enableMail {
+            services.postfix = mkIf cfg.enableMail {
               enable = true;
               enableSubmission = true;
             };

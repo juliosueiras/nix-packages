@@ -72,7 +72,16 @@
             use Mix.Config
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
-            ${if cfg.gmail.enable then (''
+            ${if cfg.enableMail then (''
+              config :asciinema, Asciinema.Emails.Mailer,
+                adapter: Bamboo.SMTPAdapter,
+                server: "localhost",
+                port: 25,
+                username: "",
+                password: "",
+                ssl: false,
+                retries: 1
+            '') else if cfg.gmail.enable then (''
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "smtp.gmail.com",
@@ -283,6 +292,9 @@
 
             services.postfix = mkIf cfg.enableMail {
               enable = true;
+              virtual = ''
+                @localhost asciinema
+              '';
               enableSubmission = true;
             };
           };

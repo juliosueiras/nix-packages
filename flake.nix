@@ -77,8 +77,6 @@
                 adapter: Bamboo.SMTPAdapter,
                 server: "localhost",
                 port: 25,
-                username: "",
-                password: "",
                 tls: :never,
                 ssl: false,
                 retries: 1

@@ -75,7 +75,7 @@
             ${if cfg.gmail.enable then (''
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SMTPAdapter,
-                server: "smtp.gmail.org",
+                server: "smtp.gmail.com",
                 port: 587,
                 username: "${cfg.gmail.username}",
                 password: "${cfg.gmail.password}",

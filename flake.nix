@@ -101,8 +101,7 @@
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,
                 deliver_later_strategy: Asciinema.BambooExqStrategy,
-                adapter: Bamboo.LocalAdapter,
-                open_email_in_browser_url: "https://${cfg.host}/sent_emails"
+                adapter: Bamboo.LocalAdapter
             '')}
           '' ;
 

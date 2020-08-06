@@ -174,6 +174,7 @@
                 URL_HOST = "${cfg.host}";
                 URL_PORT = "443";
                 URL_SCHEME = "https";
+                REDIS_URL= "redis://localhost:6379";
                 PORT = "3000";
                 SECRET_KEY_BASE = (if cfg.secretKeyBase != "generated" then
                   cfg.secretKeyBase

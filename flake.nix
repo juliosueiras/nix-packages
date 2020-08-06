@@ -72,17 +72,17 @@
             use Mix.Config
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
-            ${if cfg.enableMail then (''
-            config :asciinema, Asciinema.Emails.Mailer,
+            ${if cfg.gmail.enable then (''
+              config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.SMTPAdapter,
-                server: "${cfg.host}",
-                username: "",
-                password: "",
-                port: 25,
-                tls: :never,
-                ssl: false,
-                retries: 1,
-                no_mx_lookups: false 
+                server: "smtp.gmail.org",
+                port: 465,
+                username: "${cfg.gmail.username}",
+                password: "${cfg.gmail.password}",
+                tls: :if_available, # can be `:always` or `:never`
+                allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"],
+                ssl: true,
+                retries: 1
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,
                 deliver_later_strategy: Asciinema.BambooExqStrategy,
@@ -111,6 +111,30 @@
               description = ''
                 Secret Key for Cookies
               '';
+            };
+
+            gmail = {
+              enable = mkOption {
+                type = types.bool;
+                default = false;
+                description = ''
+                  Enable Gmail SMTP
+                '';
+              };
+
+              username = mkOption {
+                type = types.str;
+                description = ''
+                  Gmail Username
+                '';
+              };
+
+              password = mkOption {
+                type = types.str;
+                description = ''
+                  Gmail Password/App Password
+                '';
+              };
             };
 
             enableMail = mkOption {

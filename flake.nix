@@ -85,7 +85,7 @@
                 no_mx_lookups: false 
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,
-                adapter: Bamboo.TestAdapter
+                adapter: Bamboo.LocalAdapter
             '')}
           '' ;
 

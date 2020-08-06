@@ -83,6 +83,13 @@
                 allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
                 ssl: false,
                 retries: 1
+            '') else if cfg.sendgrid.enable then (''
+              config :asciinema, Asciinema.Emails.Mailer,
+                adapter: Bamboo.SendGridAdapter,
+                api_key: "${cfg.sendgrid.api_key}",
+                hackney_opts: [
+                  recv_timeout: :timer.minutes(1)
+                ]
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,
                 deliver_later_strategy: Asciinema.BambooExqStrategy,
@@ -111,6 +118,23 @@
               description = ''
                 Secret Key for Cookies
               '';
+            };
+
+            sendgrid = {
+              enable = mkOption {
+                type = types.bool;
+                default = false;
+                description = ''
+                  Enable SendGrid as Mailer
+                '';
+              };
+
+              api_key = mkOption {
+                type = types.str;
+                description = ''
+                  SendGrid API Key
+                '';
+              };
             };
 
             gmail = {

@@ -73,7 +73,7 @@
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
             ${if cfg.gmail.enable then (''
-              config :asciinema, Asciinema.Mailer,
+              config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "smtp.gmail.org",
                 port: 465,

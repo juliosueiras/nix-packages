@@ -86,7 +86,7 @@
             '') else (''
             config :asciinema, Asciinema.Mailer,
                 adapter: Bamboo.LocalAdapter
-          '')}
+            '')}
           '' ;
 
           generateSecret = readFile

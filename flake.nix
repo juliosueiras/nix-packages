@@ -101,7 +101,8 @@
             '') else (''
               config :asciinema, Asciinema.Emails.Mailer,
                 deliver_later_strategy: Asciinema.BambooExqStrategy,
-                adapter: Bamboo.LocalAdapter
+                adapter: Bamboo.LocalAdapter,
+                open_email_in_browser_url: "https://${cfg.host}/sent_emails"
             '')}
           '' ;
 
@@ -291,12 +292,7 @@
 
             services.postfix = mkIf cfg.enableMail {
               enable = true;
-              virtual = ''
-                @localhost asciinema
-                @localhost.com asciinema
-              '';
               enableSubmission = true;
-              destination = [ "localhost.com" "localhost" ];
             };
           };
         };

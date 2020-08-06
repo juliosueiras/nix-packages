@@ -294,6 +294,7 @@
               enable = true;
               virtual = ''
                 @localhost asciinema
+                @localhost.com asciinema
               '';
               enableSubmission = true;
             };

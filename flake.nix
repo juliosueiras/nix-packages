@@ -73,7 +73,7 @@
             env = &System.get_env/1
             config :asciinema, Asciinema.FileStore.Local, path: env.("UPLOADS_PATH")
             ${if cfg.enableMail then (''
-            config :asciinema, Asciinema.Mailer,
+            config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "${cfg.host}",
                 username: "",
@@ -84,7 +84,7 @@
                 retries: 1,
                 no_mx_lookups: false 
             '') else (''
-            config :asciinema, Asciinema.Mailer,
+              config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.LocalAdapter
             '')}
           '' ;

@@ -278,9 +278,9 @@
               };
 
               preStart = ''
-                #rm -rf /var/lib/asciinema-server/*
-                #cp -a ${self.packages.x86_64-linux.asciinema-server}/* /var/lib/asciinema-server/
-                #cp -a ${self.packages.x86_64-linux.asciinema-server}/.iex.exs /var/lib/asciinema-server/
+                rm -rf /var/lib/asciinema-server/*
+                cp -a ${self.packages.x86_64-linux.asciinema-server}/* /var/lib/asciinema-server/
+                cp -a ${self.packages.x86_64-linux.asciinema-server}/.iex.exs /var/lib/asciinema-server/
                 chmod -R +rw /var/lib/asciinema-server
                 chown -R asciinema:asciinema /var/lib/asciinema-server
                 cp ${customConfig} /var/lib/asciinema-server/etc/custom.exs

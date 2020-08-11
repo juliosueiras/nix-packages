@@ -195,7 +195,7 @@
               };
 
               port = mkOption {
-                type = types.str;
+                type = types.int;
                 description = ''
                   SMTP Port
                 '';

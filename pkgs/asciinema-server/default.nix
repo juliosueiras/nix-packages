@@ -1,4 +1,4 @@
-{ stdenv, mix2nix, fetchgit, callPackage, elixir_1_7, rebar3, rebar, ... }:
+{ stdenv, mix2nix, fetchgit, callPackage, elixir_1_7, erlangR21, rebar3, rebar, ... }:
 
 let 
   version = "v20200523";
@@ -47,6 +47,8 @@ in mix2nix.mkMixPackage {
   inherit version src;
 
   elixir = elixir_1_7;
+
+  erlang = erlangR21;
 
   name = "asciinema-server";
 

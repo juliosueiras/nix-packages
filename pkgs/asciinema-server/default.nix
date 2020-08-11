@@ -46,6 +46,7 @@ let
 in mix2nix.mkMixPackage {
   inherit version src;
 
+  # Erlang R22 introduced socket module which conflict with gen_smtp
   elixir = (beam.packagesWith erlangR21).elixir_1_7;
 
   erlang = erlangR21;

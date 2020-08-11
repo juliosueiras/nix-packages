@@ -91,6 +91,15 @@
                 allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
                 ssl: false,
                 retries: 1
+            '') else if cfg.relay.enable then (''
+              config :asciinema, Asciinema.Emails.Mailer,
+                adapter: Bamboo.SMTPAdapter,
+                server: "${cfg.relay.server}",
+                port: ${cfg.relay.port},
+                tls: :if_available,
+                allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
+                ssl: false,
+                retries: 1
             '') else if cfg.sendgrid.enable then (''
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SendGridAdapter,
@@ -165,6 +174,30 @@
                 type = types.str;
                 description = ''
                   Gmail Password/App Password
+                '';
+              };
+            };
+            
+            relay = {
+              enable = mkOption {
+                type = types.bool;
+                default = false;
+                description = ''
+                  Enable SMTP Relay
+                '';
+              };
+
+              server = mkOption {
+                type = types.str;
+                description = ''
+                  Relay Server
+                '';
+              };
+
+              port = mkOption {
+                type = types.str;
+                description = ''
+                  SMTP Port
                 '';
               };
             };

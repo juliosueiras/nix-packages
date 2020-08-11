@@ -93,13 +93,10 @@
                 retries: 1
             '') else if cfg.relay.enable then (''
               config :asciinema, Asciinema.Emails.Mailer,
+                deliver_later_strategy: Asciinema.BambooExqStrategy,
                 adapter: Bamboo.SMTPAdapter,
                 server: "${cfg.relay.server}",
                 port: ${toString cfg.relay.port},
-                tls: :if_available,
-                allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
-                ssl: false,
-                retries: 1
             '') else if cfg.sendgrid.enable then (''
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SendGridAdapter,

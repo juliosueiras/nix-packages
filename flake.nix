@@ -96,7 +96,7 @@
                 deliver_later_strategy: Asciinema.BambooExqStrategy,
                 adapter: Bamboo.SMTPAdapter,
                 server: "${cfg.relay.server}",
-                port: ${toString cfg.relay.port},
+                port: ${toString cfg.relay.port}
             '') else if cfg.sendgrid.enable then (''
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SendGridAdapter,

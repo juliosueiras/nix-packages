@@ -154,6 +154,15 @@
               };
             };
 
+            smtp = {
+              from_address = mkOption {
+                type = types.str;
+                description = ''
+                  SMTP From address
+                '';
+              };
+            };
+
             gmail = {
               enable = mkOption {
                 type = types.bool;
@@ -262,6 +271,7 @@
                 UPLOADS_PATH = "/etc/asciinema-server/uploads/";
                 URL_HOST = "${cfg.host}";
                 URL_PORT = "443";
+                SMTP_FROM_ADDRESS = "${cfg.smtp.from_address}";
                 URL_SCHEME = "https";
                 PORT = "3000";
                 SECRET_KEY_BASE = (if cfg.secretKeyBase != "generated" then

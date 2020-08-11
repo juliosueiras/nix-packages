@@ -95,7 +95,7 @@
               config :asciinema, Asciinema.Emails.Mailer,
                 adapter: Bamboo.SMTPAdapter,
                 server: "${cfg.relay.server}",
-                port: ${cfg.relay.port},
+                port: ${toString cfg.relay.port},
                 tls: :if_available,
                 allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
                 ssl: false,
